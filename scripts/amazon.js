@@ -39,7 +39,7 @@ products.forEach((product)=>{
 
     <div class="product-spacer"></div>
 
-    <div class="added-to-cart">
+    <div class="added-to-cart" id="added-cart">
       <img src="images/icons/checkmark.png">
       Added
     </div>
@@ -85,6 +85,14 @@ addToCart.forEach((button)=>{
         })
         cartQuantity.innerHTML = count;
 
-        document.querySelector('.added-to-cart').classList.add('added-cart');
+        const visibleMsg = document.getElementById('added-cart');
+        visibleMsg.style.opacity = 1;
+        
+        setTimeout(function(){
+            visibleMsg.style.opacity = 0;
+            visibleMsg.style.transitionTimingFunction = "ease-out";
+            visibleMsg.style.transitionDelay = '0.15s'
+            visibleMsg.style.transitionDuration = '0.15s'
+        },1000);
     })
 })
