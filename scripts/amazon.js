@@ -84,5 +84,7 @@ addToCart.forEach((button)=>{
         count+=item.quantity;
         })
         cartQuantity.innerHTML = count;
+
+        document.querySelector('.added-to-cart').classList.add('added-cart');
     })
 })
