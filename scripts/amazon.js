@@ -76,6 +76,12 @@ addToCart.forEach((button)=>{
                })
         }
         console.log(cart);
+        let count=0;
+        const cartQuantity = document.querySelector('.cart-quantity');
+        cart.forEach((item)=>{
+        count+=item.quantity;
+        })
+        console.log(count);
+        cartQuantity.innerHTML = count;
     })
 })
-
