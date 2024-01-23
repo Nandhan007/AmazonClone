@@ -1,28 +1,8 @@
-import {cart} from './cart.js'
+import {cart, add_Cart} from './cart.js'
 import { products } from '../data/products.js';
 let productHTML = '';
 
-function add_Cart(ProductId){
-  let matchedProduct;
-  const selector = document.querySelector(`.js-quantity-selector-${ProductId}`);
-  let Quantity = Number(selector.value);
 
-  cart.forEach((product)=>{
-    if(product.prodId === ProductId){
-        matchedProduct = product;
-    }
-})
-if(matchedProduct){
-    matchedProduct.quantity += Quantity;
-}
-else{
-    cart.push({
-        prodId: ProductId,
-        quantity: Quantity
-       })
-}
-
-}
 products.forEach((product)=>{
     const HTML = `<div class="product-container">
     <div class="product-image-container">
