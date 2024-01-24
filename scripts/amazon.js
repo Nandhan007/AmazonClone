@@ -1,5 +1,7 @@
 import {cart, add_Cart} from './cart.js'
 import { products } from '../data/products.js';
+import { cartQuantity } from './cart.js';
+const CartQuantity = document.querySelector('.cart-quantity');
 let productHTML = '';
 
 
@@ -58,11 +60,10 @@ products.forEach((product)=>{
 });
 
 document.querySelector(".products-grid").innerHTML = productHTML;
-
+CartQuantity.innerHTML = cartQuantity();
 
 
 const addToCart = document.querySelectorAll('.add-to-cart-button');
-console.log(addToCart);
 addToCart.forEach((button)=>{
     button.addEventListener('click',()=>{
       const ProductId= button.dataset.productId;
@@ -73,12 +74,7 @@ addToCart.forEach((button)=>{
 })
 
 function addCount(){
-        let count=0;
-        const cartQuantity = document.querySelector('.cart-quantity');
-        cart.forEach((item)=>{
-        count+=item.quantity;
-        })
-        cartQuantity.innerHTML = count;
+        CartQuantity.innerHTML = cartQuantity();
 
 }
 
