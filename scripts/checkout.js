@@ -1,5 +1,6 @@
 import {cart, removeProduct} from './cart.js'
 import { products } from '../data/products.js'
+import { cartQuantity } from './cart.js';
 let productHTML = "";
 let matchedProduct;
 cart.forEach((item)=>{
@@ -101,5 +102,10 @@ deleteprod.forEach((item)=>{
         const container = document.querySelector(`.js-delete-container-${productId}`);
         container.remove();
 
+        checkoutQuantity.innerHTML = cartQuantity();
     })
 })
+
+
+const checkoutQuantity = document.querySelector('.cart-quantity-checkout');
+checkoutQuantity.innerHTML = cartQuantity();
