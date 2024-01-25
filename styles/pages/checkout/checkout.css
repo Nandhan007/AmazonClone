@@ -14,6 +14,25 @@
   margin-right: auto;
 }
 
+.quantity-input{
+  width: 30px;
+  display: none;
+}
+
+.save-quantity-link{
+  display: none;
+}
+
+.is-editing-update .quantity-input{
+  display: initial;
+}
+
+.is-editing-update .save-quantity-link{
+  display: initial;
+}
+.is-editing-update .update-quantity-link,.is-editing-update .quantity-label{
+  display: none;
+}
 .page-title {
   font-weight: 700;
   font-size: 22px;

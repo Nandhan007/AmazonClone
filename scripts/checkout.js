@@ -1,6 +1,5 @@
-import {cart, removeProduct} from './cart.js'
+import {cart, removeProduct,cartQuantity } from './cart.js'
 import { products } from '../data/products.js'
-import { cartQuantity } from './cart.js';
 let productHTML = "";
 let matchedProduct;
 cart.forEach((item)=>{
@@ -32,9 +31,11 @@ cart.forEach((item)=>{
                   <span>
                     Quantity: <span class="quantity-label">${item.quantity}</span>
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary" data-product-id=${matchedProduct.id}>
                     Update
                   </span>
+                  <input class="quantity-input">
+                  <span class="save-quantity-link link-primary" data-product-id=${matchedProduct.id}>Save</span>
                   <span class="delete-quantity-link link-primary js-delete-product" data-product-id="${matchedProduct.id}">
                     Delete
                   </span>
@@ -109,3 +110,29 @@ deleteprod.forEach((item)=>{
 
 const checkoutQuantity = document.querySelector('.cart-quantity-checkout');
 checkoutQuantity.innerHTML = cartQuantity();
+
+const updateLink = document.querySelectorAll('.update-quantity-link');
+updateLink.forEach((update)=>{
+    update.addEventListener('click',()=>{
+        const updateid=update.dataset.productId;
+        const Product_Container = document.querySelector(`.js-delete-container-${updateid}`);
+        Product_Container.classList.add('is-editing-update');
+    })
+})
+let matchProduct;
+const saveLinks = document.querySelectorAll('.save-quantity-link');
+saveLinks.forEach((savelink)=>{
+    savelink.addEventListener('click',()=>{
+        const saveId=savelink.dataset.productId;
+        const Product_Container = document.querySelector(`.js-delete-container-${saveId}`);
+        Product_Container.classList.remove('is-editing-update');
+        const inputval = document.querySelector('.quantity-input');
+        cart.forEach((cartitem)=>{
+            if(cartitem.prodId === saveId){
+                matchProduct = cartitem;
+            }
+        })
+        matchProduct.quantity = Number(inputval.value);
+        document.querySelector('.quantity-label').innerHTML = matchProduct.quantity;
+    })
+})
