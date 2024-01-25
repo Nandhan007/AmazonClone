@@ -133,6 +133,12 @@ saveLinks.forEach((savelink)=>{
             }
         })
         matchProduct.quantity = Number(inputval.value);
+        if(Number(inputval.value)<=0 || Number(inputval.value)>1000){
+            alert("Input is not valid and ranges between 0 to 1000");
+            return;
+        }
+        inputval.value = "";
         document.querySelector('.quantity-label').innerHTML = matchProduct.quantity;
+        checkoutQuantity.innerHTML = cartQuantity();
     })
 })
