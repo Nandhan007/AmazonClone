@@ -25,7 +25,8 @@ export function add_Cart(ProductId){
   else{
       cart.push({
           prodId: ProductId,
-          quantity: Quantity
+          quantity: Quantity,
+          Deliveryid: '1'
          })
   }
   
@@ -50,4 +51,15 @@ export function cartQuantity(){
         count+=item.quantity;
     })
     return count;
+}
+
+export function UpdateDeliveryOptions(productid,Deliveryid){
+    let Deliveryproduct;
+    cart.forEach((item)=>{
+        if(productid === item.prodId){
+            Deliveryproduct = item;
+        }
+    })
+    Deliveryproduct.Deliveryid = Deliveryid;
+    localStorage.setItem('cart',JSON.stringify(cart));
 }
