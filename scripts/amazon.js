@@ -1,6 +1,6 @@
-import {cart, add_Cart} from './cart.js'
+import {cart, add_Cart} from '../data/cart.js'
 import { products } from '../data/products.js';
-import { cartQuantity } from './cart.js';
+import { cartQuantity } from '../data/cart.js';
 const CartQuantity = document.querySelector('.cart-quantity');
 let productHTML = '';
 
