@@ -3,6 +3,7 @@ import { getProduct, products } from '../../data/products.js'
 // ESM Version of dayjs library
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { DeliveryOptions , getDeliverySummary} from '../../data/delivery.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSummary(){
 let productHTML = "";
@@ -67,10 +68,9 @@ deleteprod.forEach((item)=>{
     item.addEventListener('click',()=>{
         const productId = item.dataset.productId;
         removeProduct(productId);
-
+        renderPaymentSummary();
         const container = document.querySelector(`.js-delete-container-${productId}`);
         container.remove();
-
         checkoutQuantity.innerHTML = cartQuantity();
     })
 })
@@ -94,11 +94,16 @@ saveLinks.forEach((savelink)=>{
         const saveId=savelink.dataset.productId;
         const Product_Container = document.querySelector(`.js-delete-container-${saveId}`);
         Product_Container.classList.remove('is-editing-update');
-        let matchProduct = getProduct(saveId)
+        let matchProduct;
+        cart.forEach((item)=>{
+            if(saveId === item.prodId){
+                matchProduct = item;
+            }
+        })
         inputValueUpdate(matchProduct,Product_Container)
         Product_Container.querySelector('.quantity-label').innerHTML = matchProduct.quantity;
         checkoutQuantity.innerHTML = cartQuantity();
-        
+        renderPaymentSummary();
     })
 })
 
@@ -150,6 +155,7 @@ document.querySelectorAll('.js-delivery-options').forEach((element)=>{
     const Deliveryid = element.dataset.deliveryId;
     UpdateDeliveryOptions(productid, Deliveryid)
     renderOrderSummary();
+    renderPaymentSummary();
   })
 })
 
