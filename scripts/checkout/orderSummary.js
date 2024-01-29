@@ -1,26 +1,17 @@
 import {cart, removeProduct,cartQuantity, UpdateDeliveryOptions} from '../../data/cart.js'
-import { products } from '../../data/products.js'
+import { getProduct, products } from '../../data/products.js'
 // ESM Version of dayjs library
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { DeliveryOptions } from '../../data/delivery.js';
+import { DeliveryOptions , getDeliverySummary} from '../../data/delivery.js';
 
-function renderOrderSummary(){
+export function renderOrderSummary(){
 let productHTML = "";
 let matchedProduct;
 cart.forEach((item)=>{
     const productId = item.prodId;
-    products.forEach((product)=>{
-        if(product.id == productId){
-            matchedProduct = product;
-        }
-    })
+    matchedProduct=getProduct(productId);
    const DeliveryOptionid = item.Deliveryid;
-   let DeliveryOption;
-   DeliveryOptions.forEach((option)=>{
-    if(option.id === DeliveryOptionid){
-      DeliveryOption = option;
-    }
-   })
+   let DeliveryOption = getDeliverySummary(DeliveryOptionid);
    const today = dayjs();
    const DeliveryDate = today.add(DeliveryOption.DeliveryDays,"days");
    const DateFormat = DeliveryDate.format("dddd, MMMM D");
@@ -96,19 +87,14 @@ updateLink.forEach((update)=>{
         Product_Container.classList.add('is-editing-update');
     })
 })
-let matchProduct;
+
 const saveLinks = document.querySelectorAll('.save-quantity-link');
 saveLinks.forEach((savelink)=>{
     savelink.addEventListener('click',()=>{
         const saveId=savelink.dataset.productId;
         const Product_Container = document.querySelector(`.js-delete-container-${saveId}`);
         Product_Container.classList.remove('is-editing-update');
-        
-        cart.forEach((cartitem)=>{
-            if(cartitem.prodId === saveId){
-                matchProduct = cartitem;
-            }
-        })
+        let matchProduct = getProduct(saveId)
         inputValueUpdate(matchProduct,Product_Container)
         Product_Container.querySelector('.quantity-label').innerHTML = matchProduct.quantity;
         checkoutQuantity.innerHTML = cartQuantity();
