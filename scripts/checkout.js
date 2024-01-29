@@ -34,7 +34,7 @@ cart.forEach((item)=>{
                   <span class="update-quantity-link link-primary" data-product-id=${matchedProduct.id}>
                     Update
                   </span>
-                  <input class="quantity-input">
+                  <input class="quantity-input" id="quantity-input">
                   <span class="save-quantity-link link-primary" data-product-id=${matchedProduct.id}>Save</span>
                   <span class="delete-quantity-link link-primary js-delete-product" data-product-id="${matchedProduct.id}">
                     Delete
@@ -126,19 +126,27 @@ saveLinks.forEach((savelink)=>{
         const saveId=savelink.dataset.productId;
         const Product_Container = document.querySelector(`.js-delete-container-${saveId}`);
         Product_Container.classList.remove('is-editing-update');
-        const inputval = document.querySelector('.quantity-input');
+        
         cart.forEach((cartitem)=>{
             if(cartitem.prodId === saveId){
                 matchProduct = cartitem;
             }
         })
-        matchProduct.quantity = Number(inputval.value);
-        if(Number(inputval.value)<=0 || Number(inputval.value)>1000){
-            alert("Input is not valid and ranges between 0 to 1000");
-            return;
-        }
-        inputval.value = "";
-        document.querySelector('.quantity-label').innerHTML = matchProduct.quantity;
+        inputValueUpdate(matchProduct,Product_Container)
+        Product_Container.querySelector('.quantity-label').innerHTML = matchProduct.quantity;
         checkoutQuantity.innerHTML = cartQuantity();
+        
     })
 })
+
+
+function inputValueUpdate(product,Product_Container){
+        const inputval = Product_Container.querySelector('.quantity-input');
+        product.quantity = Number(inputval.value);
+        if(Number(inputval.value)<=0 || Number(inputval.value)>1000){
+        alert("Input is not valid and ranges between 0 to 1000");
+        return;
+        }
+        inputval.value = "";
+       localStorage.setItem('cart',JSON.stringify(cart));
+}

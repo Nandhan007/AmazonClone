@@ -40,14 +40,12 @@ export function removeProduct(ProductId){
         }
     })
     cart = newcart;
-    console.log(cart)
 
     saveToStorage();
   }
 
 export function cartQuantity(){
     let count=0;
-    console.log(cart)
     cart.forEach((item)=>{
         count+=item.quantity;
     })
